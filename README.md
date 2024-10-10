@@ -5,8 +5,8 @@ LabelPlus是一个用于图片翻译的工具包，本脚本可以读取它的�
 
 designed for use in manga lettering
 # How to use
-Id打开漫画的文档indd，将Scripts Panel文件夹放入
-C:\Users\xxx\AppData\Roaming\Adobe\InDesign\Version 18.0-J\zh_CN\Scripts
+Id打开漫画的文档indd，将jsx文件放入
+C:\Users\xxx\AppData\Roaming\Adobe\InDesign\Version 18.0-J\zh_CN\Scripts\Scripts Panel
 - 在脚本窗口可看到Label Plus-id脚本
 ![image](https://github.com/user-attachments/assets/61d00913-12b6-4f5e-bbd6-5fb9a97e0381)
 
