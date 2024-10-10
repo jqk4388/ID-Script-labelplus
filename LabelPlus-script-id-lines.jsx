@@ -37,7 +37,7 @@ function readAndParseTxtFile(filePath) {
         var textMatch = lines[i].match(/----------------\[(\d+)\]----------------\[(.*?)\,(.*?)\,(.*?)\]/);
         if (textMatch && currentPage) {
             var entry = {
-                pageImage: currentPage, // 当前页的图片名称（例如：001.tif）
+                pageImage: totalPages, // 当前页的图片名称（例如：001.tif）
                 pageNumber: parseInt(textMatch[1]), // 当前台词在页面上的编号（例如：1）
                 position: [parseFloat(textMatch[2]), parseFloat(textMatch[3])], // 坐标百分比
                 group: parseInt(textMatch[4]) // 分组
