@@ -58,7 +58,7 @@ function readAndParseTxtFile(filePath) {
                 // 如果是多行文本，调整X坐标
                 for (var k = 0; k < textContent.length; k++) {
                     var entry = {
-                        pageImage: currentPage.slice(0, currentPage.lastIndexOf('.')), // 当前页的图片名称（例如：001.tif）
+                        pageImage: totalPages,
                         pageNumber: pageNumber, // 当前台词在页面上的编号
                         position: [baseX - k * 0.03, baseY+ k * 0.03], // 后一行比前一行小5
                         group: group, // 分组
@@ -69,7 +69,7 @@ function readAndParseTxtFile(filePath) {
             } else if (textContent.length === 1) {
                 // 如果是单行文本，保持X坐标不变
                 var entry = {
-                    pageImage: currentPage.slice(0, currentPage.lastIndexOf('.')),
+                    pageImage: totalPages,
                     pageNumber: pageNumber,
                     position: [baseX, baseY], // 保持原来的X坐标
                     group: group,
