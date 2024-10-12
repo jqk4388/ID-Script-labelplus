@@ -20,7 +20,6 @@ function readAndParseTxtFile(filePath) {
 
     var lines = content.split("\n");
     var entries = [];
-    var currentPage = null;
 
     totalPages = 0; // 重置页面总数
 
@@ -58,7 +57,7 @@ function readAndParseTxtFile(filePath) {
                 // 如果是多行文本，调整X坐标
                 for (var k = 0; k < textContent.length; k++) {
                     var entry = {
-                        pageImage: totalPages,
+                        pageImage: totalPages, // 当前页的图片名称（例如：001.tif）
                         pageNumber: pageNumber, // 当前台词在页面上的编号
                         position: [baseX - k * 0.03, baseY+ k * 0.03], // 后一行比前一行小5
                         group: group, // 分组
@@ -125,7 +124,7 @@ function applyStylesBasedOnGroup(doc, textFrame, group) {
         case 1:
             paragraphStyleName = "框内";
             characterStyleName = "字符样式1";
-            objectStyleName = "[基本文本框架]";
+            objectStyleName = "文本框居中-垂直";
             break;
         case 2:
             paragraphStyleName = "框外";
@@ -136,7 +135,7 @@ function applyStylesBasedOnGroup(doc, textFrame, group) {
         default:
             paragraphStyleName = "[基本段落]";
             characterStyleName = "[无]";
-            objectStyleName = "[文本框居中-垂直]";
+            objectStyleName = "[基本文本框架]";
     }
 
     // 应用段落样式
