@@ -20,7 +20,6 @@ function readAndParseTxtFile(filePath) {
 
     var lines = content.split("\n");
     var entries = [];
-    var currentPage = null;
 
     totalPages = 0; // 重置页面总数
 
@@ -28,16 +27,15 @@ function readAndParseTxtFile(filePath) {
         // 匹配页面名
         var pageMatch = lines[i].match(/>>>>>>>>\[(.*)\]<<<<<<<<$/);
         if (pageMatch) {
-            currentPage = pageMatch[1]; // 记录当前页面 (例如：001.tif)
             totalPages++; // 每遇到一个新页面时，页面总数增加
             continue;
         }
 
         // 匹配台词编号、位置和分组信息
         var textMatch = lines[i].match(/----------------\[(\d+)\]----------------\[(.*?)\,(.*?)\,(.*?)\]/);
-        if (textMatch && currentPage) {
+        if (textMatch) {
             var entry = {
-                pageImage: totalPages, // 当前页的图片名称（例如：001.tif）
+                pageImage: totalPages, // 当前条目所处的页码
                 pageNumber: parseInt(textMatch[1]), // 当前台词在页面上的编号（例如：1）
                 position: [parseFloat(textMatch[2]), parseFloat(textMatch[3])], // 坐标百分比
                 group: parseInt(textMatch[4]) // 分组
@@ -100,7 +98,7 @@ function applyStylesBasedOnGroup(doc, textFrame, group) {
         case 1:
             paragraphStyleName = "框内";
             characterStyleName = "字符样式1";
-            objectStyleName = "[基本文本框架]";
+            objectStyleName = "文本框居中-垂直";
             break;
         case 2:
             paragraphStyleName = "框外";
@@ -111,7 +109,7 @@ function applyStylesBasedOnGroup(doc, textFrame, group) {
         default:
             paragraphStyleName = "[基本段落]";
             characterStyleName = "[无]";
-            objectStyleName = "[文本框居中-垂直]";
+            objectStyleName = "[基本文本框架]";
     }
 
     // 应用段落样式
@@ -173,8 +171,8 @@ function insertTextOnPageByTxtEntry(entry, doc) {
     // 将坐标百分比转换为绝对坐标
     var coordinates = convertPercentToAbsoluteCoordinates(page, entry.position[0], entry.position[1]);
     var textFrame = page.textFrames.add();
-    textFrame_x = 12;//设置文本框大小
-    textFrame_y = 25;
+    textFrame_x = 48;//设置文本框大小
+    textFrame_y = 55;
     textFrame.geometricBounds = [coordinates[1], coordinates[0]-textFrame_x/2, coordinates[1] + textFrame_y, coordinates[0] + textFrame_x];
     textFrame.contents = entry.text;
     textFrame.textFramePreferences.verticalJustification=  1953460256;
@@ -185,7 +183,7 @@ function insertTextOnPageByTxtEntry(entry, doc) {
     applyStylesBasedOnGroup(doc, textFrame, entry.group);
     
 }
-
+// 处理台词
 function processTxtEntries(txtEntries, doc) {
     // 确保页面数足够
     ensureEnoughPages(doc, totalPages);
@@ -201,6 +199,7 @@ function selectAndReadFiletxt() {
     var txtFile = File.openDialog("请选择一个LP翻译稿", "*.txt");
     if (txtFile) {
         var txtEntries = readAndParseTxtFile(txtFile.fsName);
+        // 所有台词装入txtEntries
         var doc = app.activeDocument;
         //改标尺的原点和单位，设置默认零点
         doc.viewPreferences.rulerOrigin = RulerOrigin.pageOrigin;
