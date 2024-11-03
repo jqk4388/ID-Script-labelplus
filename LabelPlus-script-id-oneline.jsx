@@ -171,19 +171,6 @@ function applyStylesBasedOnGroup(doc, textFrame, group) {
     }
 }
 
-function applyObjectStyle(textFrame, styleName) {
-    try {
-        var objectStyle = app.activeDocument.objectStyles.itemByName(styleName);
-        if (objectStyle.isValid) {
-            textFrame.appliedObjectStyle = objectStyle;
-        } else {
-            alert("Object style not found: " + styleName);
-        }
-    } catch (e) {
-        alert("Error applying object style: " + e.message);
-    }
-}
-
 
 function insertTextOnPageByTxtEntry(entry, doc) {
     var pageIndex = parseInt(entry.pageImage,10) - 1; // 假设pageImage类似001.tif
@@ -201,7 +188,7 @@ function insertTextOnPageByTxtEntry(entry, doc) {
     textFrame_y = 25;
     textFrame.geometricBounds = [coordinates[1], coordinates[0]-textFrame_x/2, coordinates[1] + textFrame_y, coordinates[0] + textFrame_x];
     textFrame.contents = entry.text;
-    textFrame.textFramePreferences.verticalJustification=  1953460256;
+    textFrame.parentStory.storyPreferences.storyOrientation = StoryHorizontalOrVertical["VERTICAL"];
 
 
     // 根据分组应用样式
